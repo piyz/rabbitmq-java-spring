@@ -35,10 +35,6 @@ public class RabbitMqController {
         template.convertAndSend(routingKey, message);
         logger.info("[x] Sent '" + routingKey + ": " + message + "'");
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ignored) {}
-
         return "look at the console";
     }
 
