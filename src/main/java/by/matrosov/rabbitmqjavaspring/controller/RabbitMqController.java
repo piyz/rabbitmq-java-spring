@@ -18,24 +18,26 @@ public class RabbitMqController {
 
     @RequestMapping("/")
     @ResponseBody
-    public String sender() {
+    public String producer() {
         String message;
         String routingKey;
         Random random = new Random();
-        for (int i = 1; i < 25; i++) {
-            int n = random.nextInt(i) + 1;
-            message = String.valueOf(n);
-            if (isPrime(n)){
-                routingKey = "prime";
-            }else {
-                routingKey = "non-prime";
-            }
-            template.convertAndSend(routingKey, message);
-            logger.info("[x] Sent '" + routingKey + ": " + message + "'");
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ignored) {}
+
+        int n = random.nextInt(23) + 1;
+        message = String.valueOf(n);
+
+        if (isPrime(n)){
+            routingKey = "prime";
+        }else {
+            routingKey = "non-prime";
         }
+
+        template.convertAndSend(routingKey, message);
+        logger.info("[x] Sent '" + routingKey + ": " + message + "'");
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ignored) {}
 
         return "look at the console";
     }
